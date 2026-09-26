@@ -1,24 +1,20 @@
 {
-  "name": "alexjwick.github.io",
-  "version": "1.0.0",
-  "description": "Personal portfolio website showcasing projects and experience.",
-  "main": "main.js",
+  "name": "alexwick.co",
+  "private": true,
+  "description": "Alex Wick's personal site.",
   "type": "module",
   "scripts": {
-    "build:css": "tailwindcss -i ./styles/input.css -o ./styles/output.css --minify",
-    "watch:css": "tailwindcss -i ./styles/input.css -o ./styles/output.css --watch",
-    "build": "npm run build:css",
-    "dev": "npm run watch:css"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "postcss": "^8.5.3",
-    "tailwindcss": "^4.1.8"
+  "engines": {
+    "node": "22.x"
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.8",
-    "@tailwindcss/postcss": "^4.1.8"
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.5"
   }
 }

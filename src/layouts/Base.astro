@@ -1,0 +1,56 @@
+---
+import "../styles/global.css";
+import romanFont from "../assets/fonts/newsreader-roman.woff2?url";
+import { getPosts } from "../lib/posts";
+
+interface Props {
+  title?: string;
+  description?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
+}
+
+const {
+  title = "Alex Wick",
+  description = "Alex Wick leads the Applied AI team at Constellation in New York.",
+  type = "website",
+  noindex = false,
+} = Astro.props;
+
+// Pages build to files like writing/post.html, but Vercel serves them without the extension.
+const canonical = new URL(Astro.url.pathname.replace(/(index)?\.html$/, ""), Astro.site);
+const hasPosts = (await getPosts()).length > 0;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content="Alex Wick" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141413" media="(prefers-color-scheme: dark)" />
+
+    <link rel="preload" href={romanFont} as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {hasPosts && <link rel="alternate" type="application/rss+xml" title="Alex Wick" href="/rss.xml" />}
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

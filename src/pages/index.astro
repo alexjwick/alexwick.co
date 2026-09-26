@@ -1,0 +1,145 @@
+---
+import Base from "../layouts/Base.astro";
+import { formatDate, getPosts, isoDate } from "../lib/posts";
+
+// The Writing section stays hidden until there's a published post.
+const posts = await getPosts();
+---
+
+<Base>
+  <main class="page">
+    <h1>Alex Wick</h1>
+
+    <div class="intro">
+      <p>
+        I lead the Applied AI team at <a href="https://www.helloconstellation.com/">Constellation</a>,
+        an AI marketing platform for regulated industries. I joined in July 2025 as one of the team’s
+        first two engineers.
+      </p>
+      <p>
+        Before that I studied computer science at Brown. I grew up in Burlington, Vermont, and now live
+        in New York.
+      </p>
+    </div>
+
+    <ul class="links">
+      <li><a href="mailto:alex@alexwick.co">alex@alexwick.co</a></li>
+      <li><a href="https://github.com/alexjwick">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/alexjwick">LinkedIn</a></li>
+      <li><a href="https://x.com/alexwick">X</a></li>
+    </ul>
+
+    {
+      posts.length > 0 && (
+        <section>
+          <h2>Writing</h2>
+          <ul class="posts">
+            {posts.map((post) => (
+              <li>
+                <a href={`/writing/${post.id}`}>{post.data.title}</a>
+                <time datetime={isoDate(post.data.date)}>{formatDate(post.data.date)}</time>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <section>
+      <h2>At Constellation</h2>
+      <ul class="entries">
+        <li>
+          <h3>Dealer pricing data</h3>
+          <p>
+            A product that tracks the lease and finance offers on the websites of all 18,000+ U.S. car
+            dealerships. It reads offers from dealer-platform APIs where it can and uses LLM extraction
+            everywhere else, with accuracy measured against a labeled benchmark.
+          </p>
+        </li>
+        <li>
+          <h3>Offer extraction agents</h3>
+          <p>
+            The first version of our offer extraction: a multi-agent LLM pipeline where specialized
+            agents find, extract, and verify the offers on any dealership website.
+          </p>
+        </li>
+        <li>
+          <h3>Offer banners</h3>
+          <p>
+            An automated pipeline that launches offer banners across one automaker’s ~860 U.S. dealer
+            websites, from picking which dealers get each banner to pushing it live. It replaced a
+            manual process, and a request now goes live in four hours.
+          </p>
+        </li>
+        <li>
+          <h3>Billing</h3>
+          <p>
+            Constellation’s billing system, the source of truth for every client’s packages, products,
+            and media budget. Other teams read from it through views, live spreadsheets, and APIs.
+          </p>
+        </li>
+        <li>
+          <h3>Internal platform</h3>
+          <p>
+            The Next.js, GraphQL, and AWS CDK app behind billing, pricing data, and operations. Its CI is
+            built for coding agents: every pull request gets lint, type, and test gates and its own
+            ephemeral AWS environment.
+          </p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Before</h2>
+      <ul class="entries">
+        <li>
+          <div class="entry-head">
+            <h3><a href="https://web.archive.org/web/20241106011712/https://24cast.org/">24cast</a></h3>
+            <span class="year">2023–24</span>
+          </div>
+          {/* Keep each link on the same line as the text before it. Astro's HTML
+              compression drops a line break that sits right before a tag. */}
+          <p>
+            Brown students’ forecast of the 2024 U.S. elections. I recruited and led the five-person web
+            team and built the front end, visualizations, and backend. It reached 30,000+ monthly users
+            and was covered by <a href="https://www.browndailyherald.com/article/2024/09/get-to-know-the-election-result-prediction-model-developed-by-brown-students">The Brown Daily Herald</a>, <a href="https://www.prnewswire.com/news-releases/new-election-prediction-model-by-students-at-brown-university-outperforms-industry-leaders-302184650.html">PR Newswire</a>, and <a href="https://bethesdamagazine.com/2024/08/19/blair-graduate-wants-to-change-how-election-data-is-used-creates-results-prediction-model/">Bethesda Magazine</a>.
+            The <a href="https://github.com/BPR-Data-Team/ElectionModel2024-site">site’s code</a> is on GitHub.
+          </p>
+        </li>
+        <li>
+          <div class="entry-head">
+            <h3>BETA Technologies</h3>
+            <span class="year">2024</span>
+          </div>
+          <p>
+            Software engineering intern at an electric aircraft maker. I built the factory floor’s
+            nonconformance reporting app, cutting response time from 1–2 days to 30 minutes, and
+            generated OpenAPI docs for 11,000+ ERP endpoints so teams could pull their own data for FAA
+            certification.
+          </p>
+        </li>
+        <li>
+          <div class="entry-head">
+            <h3>Weenix</h3>
+            <span class="year">2024</span>
+          </div>
+          <p>
+            A Unix-like kernel in C for Brown’s operating systems course: processes and threads, device
+            drivers, a virtual file system, an on-disk file system, and virtual memory with
+            copy-on-write.
+          </p>
+        </li>
+        <li>
+          <div class="entry-head">
+            <h3><a href="https://devpost.com/software/lightweight-deepfake-detectors">Deepfake detection</a></h3>
+            <span class="year">2024</span>
+          </div>
+          <p>
+            A small CNN trained from scratch (6.5M parameters) that matched a pretrained VGG16 at 75%
+            validation accuracy on FaceForensics++ and Celeb-DF.
+          </p>
+        </li>
+      </ul>
+    </section>
+  </main>
+</Base>
